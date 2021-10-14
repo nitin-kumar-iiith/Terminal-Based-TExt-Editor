@@ -1359,6 +1359,14 @@ void process_string(string query){
         else if(( query[i] != ' ' ) && command_fetched==true){
             temp+=query[i];
         }
+	else if(( query[i] == ' ' )&&(i>0)&&( query[i-1] == '\\' ) && command_fetched==true&& (temp!="")){
+            temp.pop_back();
+            temp+=query[i];
+            //temp+="hello";
+            //die(temp.c_str());
+            //source.push_back(temp);
+            //temp="";
+        }
         else if(( query[i] == ' ' ) && command_fetched==true&& (temp!="")){
             source.push_back(temp);
             temp="";
@@ -1536,6 +1544,14 @@ void editorInsertChar(int c) {
                 //return ;
                 //break;
             }
+		else if(cb == 127&&typed.length()>13){
+            //Enter Pressed
+            //process_string(typed);
+            typed.pop_back();
+            //typed="Command Mode:";
+            setStatusMessage(typed.c_str());
+            refreshScreen();
+        }
             else{ 
                 if(cb=='q'&& typed.length()==13){die("Program Exited");}
                 typed+=cb;
